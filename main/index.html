@@ -97,7 +97,7 @@
                         <div id="right">
                             <label><input type="radio" name="add" className="text"/>文本框</label><br/>
                             <label><input type="radio" name="add" className="date"/>时间框</label><br/>
-                            <button type="button" onClick={this.handleClick}> +</button>
+                            <button  id="add" type="button" onClick={this.handleClick}> +</button>
                         </div>
                     </div>
                 </div>)
@@ -110,9 +110,11 @@
                                 <form>
                                     {this.state.inputLists.map((list, index) => {
                                         if (list === 'text') {
-                                            return <Text deleted={this.handleDeleted} index={index}/>
+                                            return <div>
+                                            <textarea rows="10" cols="50"></textarea>
+                                                </div>
                                         } else {
-                                            return <Timer deleted={this.handleDeleted} index={index}/>
+                                            return <div><input type={list}/></div>
                                         }
                                     })}
                                 </form>
