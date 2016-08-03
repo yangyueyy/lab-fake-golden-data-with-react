@@ -1,14 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <script src="../build/react.js"></script>
     <script src="../build/react-dom.js"></script>
     <script src="../build/browser.min.js"></script>
+    <link href="base.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-
+<div id="page">
+</div>
 <script type="text/babel">
 
+
+    const Text = React.createClass({
+
+         handleClick:function(){
+
+         },
+        render: function () {
+            return (<div>
+                <textarea rows="10" cols="50"></textarea>
+                <input type="button" value=" X " onClick={this.handleClick}/>
+            </div>)
+        }
+    });
+    const Timer = React.createClass({
+        handleDelclick: function (index) {
+
+        },
+        render: function () {
+            return (
+                    <div>
+                        <input type="date"/>
+                        <input type="button" value=" X " onClick={this.handleDelClick}/>
+                    </div>
+            )
+        }
+    });
+
+    const Box = React.createClass({
+
+        getInitialState: function () {
+            return {
+                inputLists: [],
+                preview: false
+            }
+        },
+        handleClick: function () {
+           // let inputLists = this.state.inputLists;
+            if (document.getElementsByName('add')[0].checked === true) {
+                this.state.inputLists.push('text');
+            }
+            else if(document.getElementsByName('add')[1].checked === true){
+                this.state.inputLists.push('date');
+            }
+
+        //    this.state.inputLists = inputLists;
+         //   console.log(this.state.inputLists);
+           // console.log(this.state.inputLists.length);
+            this.setState({inputLists:this.state.inputLists});
+        },
+
+        deleted:function (index) {
+            this.state.inputLists.splice(index,1);
+            this.setState({inputLists:this.state.inputLists});
+        },
+
+        render: function () {
+            console.log(this.state.inputLists);
+            return (<div>
+                <div id="header"><input type="button" id="preview" value="预览"/></div>
+                <div id="content">
+                    <div id="left"><form>
+                        {this.state.inputLists.map(list => {
+                        if (list === 'text') {
+                            return <Text />
+                        } else {
+                            return <Timer />
+                        }
+                    })}</form>
+                    </div>
+                    <div id="right">
+                        <label><input type="radio" name="add" className="text"/>文本框</label><br/>
+                        <label><input type="radio" name="add" className="date"/>时间框</label><br/>
+                        <button type="button" onClick={this.handleClick}> + </button>
+                    </div>
+                </div>
+            </div>)
+        }
+    });
+
+    ReactDOM.render(<Box/>, document.getElementById("page"));
+
 </script>
+
 </body>
 </html>
