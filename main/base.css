@@ -2,7 +2,7 @@
     padding: 0;
     margin: 0;
 }
-#header input {
+.header input {
     vertical-align: middle;
     padding: 10px;
     color: crimson;
@@ -12,7 +12,15 @@
     left: -50%;
 }
 
-#header {
+.backContent{
+    clear: both;
+    border: 3px black solid;
+    margin: 80px;
+    height: 1000px;
+    text-align: center;
+}
+
+.header{
     float: left; /* 自适应内容宽度 */
     position: relative;
     left: 50%;

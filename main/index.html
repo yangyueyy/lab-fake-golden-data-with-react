@@ -67,36 +67,62 @@
             this.setState({inputLists: this.state.inputLists});
         },
 
-        /*previewClick:function(){
+        previewClick:function(){
             this.state.preview = true;
-            this
-        },*/
+            this.setState({preview:this.state.preview});
+        },
+
+        backClick:function () {
+            this.state.preview = false;
+            this.setState({preview:this.state.preview});
+        },
+
         render: function () {
             console.log(this.state.inputLists);
-            return (<div>
-                <div id="header"><input type="button" id="preview" value="预览" onClick={this.previewClick}/></div>
-                <div id="content">
-                    <div id="left">
-                        <form>
-                            {this.state.inputLists.map((list, index) => {
-                                if (list === 'text') {
-                                    return <Text deleted={this.handleDeleted} index={index} />
-                                        } else {
-                                        return <Timer deleted={this.handleDeleted} index={index} />
+            if(this.state.preview === false) {
+                return (<div>
+                    <div className="header"><input type="button" id="preview" value="预览" onClick={this.previewClick}/></div>
+                    <div id="content">
+                        <div id="left">
+                            <form>
+                                {this.state.inputLists.map((list, index) => {
+                                    if (list === 'text') {
+                                        return <Text deleted={this.handleDeleted} index={index}/>
+                                    } else {
+                                        return <Timer deleted={this.handleDeleted} index={index}/>
                                     }
-                                        })}
-                        </form>
+                                })}
+                            </form>
+                        </div>
+                        <div id="right">
+                            <label><input type="radio" name="add" className="text"/>文本框</label><br/>
+                            <label><input type="radio" name="add" className="date"/>时间框</label><br/>
+                            <button type="button" onClick={this.handleClick}> +</button>
+                        </div>
                     </div>
-                    <div id="right">
-                        <label><input type="radio" name="add" className="text"/>文本框</label><br/>
-                        <label><input type="radio" name="add" className="date"/>时间框</label><br/>
-                        <button type="button" onClick={this.handleClick}> +</button>
-                    </div>
-                </div>
-            </div>)
+                </div>)
+            }
+            else{
+                return (
+                        <div>
+                            <div className="header"><input type="button" id="back" value="返回" onClick={this.backClick}/></div>
+                            <div className="backContent">
+                                <form>
+                                    {this.state.inputLists.map((list, index) => {
+                                        if (list === 'text') {
+                                            return <Text deleted={this.handleDeleted} index={index}/>
+                                        } else {
+                                            return <Timer deleted={this.handleDeleted} index={index}/>
+                                        }
+                                    })}
+                                </form>
+                            </div>
+                           <input type="button" value="提交"　/>
+                        </div>
+                )
+            }
         }
     });
-
     ReactDOM.render(<Box/>, document.getElementById("page"));
 
 </script>
