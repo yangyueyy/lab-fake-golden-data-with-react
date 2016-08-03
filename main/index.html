@@ -15,25 +15,25 @@
 
     const Text = React.createClass({
 
-         handleClick:function(){
-
-         },
+        handleDelClick: function (index) {
+            this.props.deleted(index);
+        },
         render: function () {
             return (<div>
                 <textarea rows="10" cols="50"></textarea>
-                <input type="button" value=" X " onClick={this.handleClick}/>
+                <input type="button" value=" X " onClick={this.handleDelClick.bind(this, this.props.index)}/>
             </div>)
         }
     });
     const Timer = React.createClass({
-        handleDelclick: function (index) {
-
+        handleDelClick: function (index) {
+            this.props.deleted(index);
         },
         render: function () {
             return (
                     <div>
                         <input type="date"/>
-                        <input type="button" value=" X " onClick={this.handleDelClick}/>
+                        <input type="button" value=" X " onClick={this.handleDelClick.bind(this,this.props.index)}/>
                     </div>
             )
         }
@@ -48,43 +48,49 @@
             }
         },
         handleClick: function () {
-           // let inputLists = this.state.inputLists;
+            // let inputLists = this.state.inputLists;
             if (document.getElementsByName('add')[0].checked === true) {
                 this.state.inputLists.push('text');
             }
-            else if(document.getElementsByName('add')[1].checked === true){
+            else if (document.getElementsByName('add')[1].checked === true) {
                 this.state.inputLists.push('date');
             }
 
-        //    this.state.inputLists = inputLists;
-         //   console.log(this.state.inputLists);
-           // console.log(this.state.inputLists.length);
-            this.setState({inputLists:this.state.inputLists});
+            //    this.state.inputLists = inputLists;
+            //   console.log(this.state.inputLists);
+            // console.log(this.state.inputLists.length);
+            this.setState({inputLists: this.state.inputLists});
         },
 
-        deleted:function (index) {
-            this.state.inputLists.splice(index,1);
-            this.setState({inputLists:this.state.inputLists});
+        handleDeleted: function (index) {
+            this.state.inputLists.splice(index, 1);
+            this.setState({inputLists: this.state.inputLists});
         },
 
+        /*previewClick:function(){
+            this.state.preview = true;
+            this
+        },*/
         render: function () {
             console.log(this.state.inputLists);
             return (<div>
-                <div id="header"><input type="button" id="preview" value="预览"/></div>
+                <div id="header"><input type="button" id="preview" value="预览" onClick={this.previewClick}/></div>
                 <div id="content">
-                    <div id="left"><form>
-                        {this.state.inputLists.map(list => {
-                        if (list === 'text') {
-                            return <Text />
-                        } else {
-                            return <Timer />
-                        }
-                    })}</form>
+                    <div id="left">
+                        <form>
+                            {this.state.inputLists.map((list, index) => {
+                                if (list === 'text') {
+                                    return <Text deleted={this.handleDeleted} index={index} />
+                                        } else {
+                                        return <Timer deleted={this.handleDeleted} index={index} />
+                                    }
+                                        })}
+                        </form>
                     </div>
                     <div id="right">
                         <label><input type="radio" name="add" className="text"/>文本框</label><br/>
                         <label><input type="radio" name="add" className="date"/>时间框</label><br/>
-                        <button type="button" onClick={this.handleClick}> + </button>
+                        <button type="button" onClick={this.handleClick}> +</button>
                     </div>
                 </div>
             </div>)
